@@ -1,43 +1,47 @@
 # Store Rating Platform
 
-A full-stack web application for browsing stores, submitting ratings, and managing reviews. Built with React, Node.js, and MySQL.
+A full-stack web application that enables users to discover stores, submit ratings, and manage reviews with role-based access control. Demonstrates clean architecture, secure authentication, and professional software engineering practices.
 
 ---
 
-## Overview
+## Project Overview
 
-**Purpose**: Centralized store discovery and review platform with role-based access control.
+**Objective**: Build a centralized platform for store discovery and customer reviews with RBAC.
 
 **Key Features**:
-- User authentication and authorization
-- Store browsing with search and filtering
-- 5-star rating and review system
-- Admin dashboard with analytics
-- Store owner insights and metrics
-- Comprehensive audit logging
+- User authentication with JWT and role-based authorization
+- Store browsing with search, pagination, and filtering
+- 1-5 star rating system with review comments
+- Admin dashboard with platform analytics
+- Store owner performance dashboard
+- Comprehensive audit logging for compliance
 
 ---
 
-## Features by Role
+## Features by User Role
 
-### Regular Users
-- Browse and search stores
-- Submit ratings (1-5 stars) and reviews
-- View other users' reviews
-- Update password
-- Dark/light theme toggle
+### User (Regular Customer)
+- Search and browse stores with pagination
+- Sort by store name, address, and ratings
+- Submit 1-5 star ratings with optional review comments
+- Enforced one-review-per-store policy
+- Password management with complexity validation
+- Profile viewing and account management
 
-### Store Owners
-- Dashboard with store performance metrics
-- View customer ratings and comments
-- Track average ratings and review counts
+### Store Owner
+- Dashboard with aggregated analytics
+- View all customer ratings and feedback
+- Monitor average ratings and review counts
+- Performance metrics visualization
 
-### Administrators
-- User and store management
-- Platform analytics and metrics
-- Global search across users and stores
-- Audit log access
-- 30-day growth tracking
+### System Administrator
+- User and store management (CRUD operations)
+- Create accounts with role assignment
+- Toggle user/store active status
+- Delete users and stores
+- Global search functionality
+- Audit log access with activity tracking
+- Platform dashboard with 30-day metrics
 
 ---
 
