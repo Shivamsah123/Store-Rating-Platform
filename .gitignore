@@ -1,0 +1,86 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+npm-err.log*
+yarn-error.log*
+
+# Package manager lock files (optional - commit these for consistency)
+# package-lock.json
+# yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Development server
+.cache/
+.parcel-cache/
+.turbo/
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Database files (if using local SQLite or similar)
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# IDE specific
+*.iml
+.gradle/
+local.properties
+
+# Production build
+.next/
+out/
+
+# Misc
+.env.test
+.env.production.local
+
+# Files that should not be committed
+*.bak
+*.backup
