@@ -436,22 +436,6 @@ NODE_ENV=production npm install
 npm start
 ```
 
-### Environment Variables (Production)
-```env
-# Backend
-NODE_ENV=production
-PORT=5000
-DB_HOST=your_production_db_host
-DB_USER=production_user
-DB_PASSWORD=strong_random_password
-DB_NAME=store_rating_platform
-JWT_SECRET=very_long_random_string_min_32_chars
-CLIENT_URL=https://yourdomain.com
-
-# Frontend
-VITE_API_URL=https://api.yourdomain.com/api
-```
-
 ### Deployment Checklist
 - [ ] Use HTTPS/SSL certificates
 - [ ] Store secrets in environment variables
