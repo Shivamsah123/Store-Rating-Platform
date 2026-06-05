@@ -538,12 +538,6 @@ MIT License
 - Clean code and architecture patterns
 - Responsive UI development
 
-**Submission Information**:
-- **Challenge**: Roxiler Coding Challenge
-- **Submission Date**: June 5, 2026
-- **Deadline**: June 7, 2026
-- **Institution**: C-DAC (Centre for Development of Advanced Computing)
 
----
 
 **Version**: 1.0.0 | **Updated**: June 5, 2026
