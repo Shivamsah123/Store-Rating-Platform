@@ -499,10 +499,91 @@ VITE_API_URL=http://localhost:5000/api
 
 ---
 
-## License
+## Verification & Testing
+
+### Manual Testing Steps
+
+**1. User Registration & Authentication**
+- Navigate to http://localhost:5173
+- Click "Register" and create new account
+- Login with created credentials
+- Verify redirect to user dashboard
+
+**2. Store Browsing & Rating**
+- Search stores by name or address
+- Click on store to view reviews
+- Submit a 5-star rating with comment
+- Verify rating appears in store details
+- Try duplicate rating (should show error)
+
+**3. Admin Panel Testing**
+- Login as admin@platform.com
+- Navigate to admin dashboard
+- Create new user and verify in user list
+- Create new store and assign to owner
+- Test user status toggle and delete functions
+- Verify audit logs track all actions
+
+**4. Store Owner Dashboard**
+- Login as owner1@store.com
+- View owned stores analytics
+- Verify ratings and metrics display
+- Check customer reviews
+
+### Code Quality Checks
+
+- All functions documented with comments
+- Consistent naming conventions
+- Error handling on all endpoints
+- Input validation on client and server
+- No hardcoded sensitive values
+- Proper HTTP status codes used
+
+---
+
+## Project Submission Checklist
+
+- ✅ Complete backend REST API with RBAC
+- ✅ React frontend with responsive design
+- ✅ MySQL database with proper schema
+- ✅ JWT authentication and authorization
+- ✅ Input validation and security measures
+- ✅ Audit logging system
+- ✅ Comprehensive error handling
+- ✅ API documentation (Swagger)
+- ✅ Database seeding with test data
+- ✅ Environment configuration (.env.example)
+- ✅ .gitignore with sensitive files excluded
+- ✅ Professional README with setup instructions
+- ✅ Clean architecture with MVC pattern
+- ✅ Repository pattern for data access
+
+---
 
 MIT License
 
 ---
 
-**Version**: 1.0.0 | **Last Updated**: June 2024
+## About This Project
+
+**Project Type**: Full-Stack Web Application (CDAC Placement Submission)
+
+**Skills Demonstrated**:
+- Full-stack JavaScript/Node.js development
+- React and component-based architecture
+- RESTful API design and implementation
+- Database design and ORM usage
+- Authentication and authorization
+- Security best practices
+- Clean code and architecture patterns
+- Responsive UI development
+
+**Submission Information**:
+- **Challenge**: Roxiler Coding Challenge
+- **Submission Date**: June 5, 2026
+- **Deadline**: June 7, 2026
+- **Institution**: C-DAC (Centre for Development of Advanced Computing)
+
+---
+
+**Version**: 1.0.0 | **Updated**: June 5, 2026
