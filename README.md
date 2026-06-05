@@ -463,30 +463,6 @@ VITE_API_URL=https://api.yourdomain.com/api
 
 ---
 
-## Environment Variables
-
-### Backend
-```env
-PORT=5000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=password
-DB_NAME=store_rating_platform
-JWT_SECRET=secret_key
-JWT_EXPIRES_IN=24h
-NODE_ENV=development
-CLIENT_URL=http://localhost:5173
-```
-
-### Frontend
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-
-⚠️ **Never commit .env files**
-
----
-
 ## Future Features
 
 - Photo uploads for stores and reviews
