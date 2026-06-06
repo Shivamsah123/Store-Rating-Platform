@@ -17,6 +17,14 @@ import Chip from '@mui/material/Chip';
 import { alpha } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/Star';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
 
 const getRatingColor = (r) => {
   if (r >= 5) return '#10B981';
@@ -30,11 +38,23 @@ const RatingsList = () => {
   const { showNotification } = useNotification();
   const [ratings, setRatings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [ratingFilter, setRatingFilter] = useState('');
+  const [sortValue, setSortValue] = useState('createdAt:DESC');
 
   useEffect(() => {
-    const fetchRatingsList = async () => {
+    const fetchRatingsList = async (opts = {}) => {
       try {
-        const res = await api.get('/store-owner/ratings');
+        setLoading(true);
+        const params = {
+          search: opts.search ?? search,
+          rating: opts.rating ?? ratingFilter
+        };
+        const [field, order] = (opts.sortValue ?? sortValue).split(':');
+        params.sortField = field;
+        params.sortOrder = order;
+
+        const res = await api.get('/store-owner/ratings', { params });
         setRatings(res.data.data);
       } catch (error) {
         showNotification('Failed to load ratings list', 'error');
@@ -43,8 +63,17 @@ const RatingsList = () => {
       }
     };
 
-    fetchRatingsList();
+    // initial load
+    fetchRatingsList({ search, rating: ratingFilter, sortValue });
+
+    // expose for manual search/button
+    RatingsList.fetch = fetchRatingsList;
   }, []);
+
+  const handleSearch = () => {
+    const fetch = RatingsList.fetch;
+    if (fetch) fetch({ search, rating: ratingFilter, sortValue });
+  };
 
   return (
     <Box>
@@ -63,6 +92,36 @@ const RatingsList = () => {
 
       {/* Table Container */}
       <Paper elevation={0} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2.5, overflow: 'hidden' }}>
+        <Box sx={{ p: 2 }}>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <TextField size="small" label="Search by company" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+              <InputLabel>Rating</InputLabel>
+              <Select label="Rating" value={ratingFilter} onChange={(e) => setRatingFilter(e.target.value)}>
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="5">5</MenuItem>
+                <MenuItem value="4">4</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="1">1</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ minWidth: 200 }}>
+              <InputLabel>Sort</InputLabel>
+              <Select label="Sort" value={sortValue} onChange={(e) => setSortValue(e.target.value)}>
+                <MenuItem value="createdAt:DESC">Date (newest)</MenuItem>
+                <MenuItem value="createdAt:ASC">Date (oldest)</MenuItem>
+                <MenuItem value="rating:DESC">Rating (high → low)</MenuItem>
+                <MenuItem value="rating:ASC">Rating (low → high)</MenuItem>
+                <MenuItem value="storeName:ASC">Store (A → Z)</MenuItem>
+                <MenuItem value="storeName:DESC">Store (Z → A)</MenuItem>
+              </Select>
+            </FormControl>
+            <IconButton size="small" onClick={handleSearch} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Stack>
+        </Box>
         <TableContainer>
           <Table sx={{ minWidth: 650 }}>
             <TableHead>

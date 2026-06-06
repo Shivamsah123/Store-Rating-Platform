@@ -59,7 +59,9 @@ class StoreOwnerService {
     };
   }
 
-  async getRatings(ownerId) {
+  async getRatings(ownerId, query = {}) {
+    const { search = '', rating, sortField = 'createdAt', sortOrder = 'DESC' } = query;
+
     const stores = await Store.findAll({
       where: { ownerId }
     });
@@ -69,17 +71,39 @@ class StoreOwnerService {
       return [];
     }
 
+    const where = {
+      storeId: {
+        [Op.in]: storeIds
+      }
+    };
+
+    if (rating) {
+      where.rating = parseInt(rating);
+    }
+
+    const include = [
+      { model: User, as: 'user', attributes: ['id', 'name', 'email'] }
+    ];
+
+    // If searching by store name, include Store with a where clause
+    if (search && search.trim() !== '') {
+      include.push({ model: Store, as: 'store', attributes: ['id', 'name'], where: { name: { [Op.like]: `%${search}%` } } });
+    } else {
+      include.push({ model: Store, as: 'store', attributes: ['id', 'name'] });
+    }
+
+    // Build order
+    let order = [];
+    if (sortField === 'storeName') {
+      order = [[{ model: Store, as: 'store' }, 'name', sortOrder]];
+    } else {
+      order = [[sortField, sortOrder]];
+    }
+
     const ratings = await Rating.findAll({
-      where: {
-        storeId: {
-          [Op.in]: storeIds
-        }
-      },
-      include: [
-        { model: User, as: 'user', attributes: ['id', 'name', 'email'] },
-        { model: Store, as: 'store', attributes: ['id', 'name'] }
-      ],
-      order: [['createdAt', 'DESC']]
+      where,
+      include,
+      order
     });
 
     return ratings.map(r => ({
@@ -91,6 +115,21 @@ class StoreOwnerService {
       rating: r.rating,
       comment: r.comment || null,
       createdAt: r.createdAt
+    }));
+  }
+
+  async getStores(ownerId) {
+    const stores = await Store.findAll({
+      where: { ownerId },
+      attributes: ['id', 'name', 'email', 'address', 'isActive']
+    });
+
+    return stores.map(s => ({
+      id: s.id,
+      name: s.name,
+      email: s.email,
+      address: s.address,
+      isActive: s.isActive
     }));
   }
 }

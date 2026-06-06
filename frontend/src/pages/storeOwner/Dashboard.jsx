@@ -16,6 +16,10 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Chip from '@mui/material/Chip';
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload?.length) {
@@ -33,7 +37,9 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
+  const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [storesLoading, setStoresLoading] = useState(true);
 
   useEffect(() => {
     const fetchOwnerDashboardData = async () => {
@@ -48,6 +54,19 @@ const Dashboard = () => {
     };
 
     fetchOwnerDashboardData();
+    // fetch owner's stores list
+    const fetchStores = async () => {
+      try {
+        const res = await api.get('/store-owner/stores');
+        setStores(res.data.data);
+      } catch (error) {
+        console.error('Failed to load owner stores:', error);
+      } finally {
+        setStoresLoading(false);
+      }
+    };
+
+    fetchStores();
   }, []);
 
   // Formatting rating distribution for bar chart
@@ -113,6 +132,28 @@ const Dashboard = () => {
           />
         </Grid>
       </Grid>
+
+      {/* Owner's Stores List */}
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h6" fontWeight={800} sx={{ mb: 1 }}>Your Outlets</Typography>
+        <Paper elevation={0} sx={{ p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 2.5 }}>
+          {storesLoading ? (
+            <Skeleton variant="rectangular" height={72} />
+          ) : stores.length > 0 ? (
+            <List>
+              {stores.map(s => (
+                <ListItem key={s.id} disableGutters secondaryAction={
+                  <Chip label={s.isActive ? 'Active' : 'Inactive'} size="small" color={s.isActive ? 'success' : 'default'} />
+                }>
+                  <ListItemText primary={s.name} secondary={s.address} />
+                </ListItem>
+              ))}
+            </List>
+          ) : (
+            <Typography color="text.secondary">You have no registered outlets yet.</Typography>
+          )}
+        </Paper>
+      </Box>
 
       <Grid container spacing={3}>
         {/* Rating Breakdown Chart */}

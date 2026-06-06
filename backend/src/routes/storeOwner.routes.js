@@ -9,5 +9,6 @@ router.use(authorize('STORE_OWNER'));
 
 router.get('/dashboard', storeOwnerController.getDashboard);
 router.get('/ratings', storeOwnerController.getRatings);
+router.get('/stores', storeOwnerController.getStores);
 
 module.exports = router;
